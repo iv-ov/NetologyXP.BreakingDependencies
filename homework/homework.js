@@ -33,7 +33,7 @@ var itemTypes = {
     }
 };
 
-function base(state) {
+function getBaseTax(state) {
     var taxes = {
         "Alabama": 0.04,
         "Alaska": 0,
@@ -51,14 +51,14 @@ function calc(state, itemType) {
     if (itemTypeTaxModifier[state] === "") {
         return 0;
     }
-    return base(state) + itemTypeTaxModifier[state];
+    return getBaseTax(state) + itemTypeTaxModifier[state];
 }
 
 
 function calculatePriceFor(state, item) {
     var result = null;
     if (items[item].type === "PreparedFood") {
-        result = (1 + base(state)) * items[item].price;
+        result = (1 + getBaseTax(state)) * items[item].price;
     } else {
         result = calc(state, items[item].type) * items[item].price + items[item].price;
     }
