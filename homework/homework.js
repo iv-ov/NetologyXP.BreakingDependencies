@@ -43,6 +43,13 @@ var baseTaxes = {
     "Connecticut": 0.0635
 };
 
+
+// We were asked to add some states.
+// We'll use the helping function to do it easier.
+setStateTaxes("Tennessee", 0.07, {"Groceries": 0.05, "PreparedFood": 0, "PrescriptionDrug": 0});
+setStateTaxes("Texas", 0.0625, {"Groceries": "", "PreparedFood": 0, "PrescriptionDrug": ""});
+
+
 function getBaseTax(state) {
     return baseTaxes[state];
 }
@@ -134,7 +141,11 @@ var tests = [
     () => assertEquals(0.4 * (1 + 0.015 + 0.065), calculatePriceFor("Arkansas", "coca-cola")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("Alaska", "amoxicillin")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("California", "amoxicillin")),
-    () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger"))
+    () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger")),
+    () => assertEquals(2 * (1 + 0.07), calculatePriceFor("Tennessee", "hamburger")),
+    () => assertEquals(0.4 * (1 + 0.07 + 0.05), calculatePriceFor("Tennessee", "coca-cola")),
+    () => assertEquals(2 * (1 + 0.0625), calculatePriceFor("Texas", "hamburger")),
+    () => assertEquals(0.2 * (1 + 0.0), calculatePriceFor("Texas", "aspirin"))
 ];
 
 //Раскомментируйте следующую строчку для запуска тестов:
