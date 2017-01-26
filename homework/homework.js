@@ -47,6 +47,16 @@ function getBaseTax(state) {
     return baseTaxes[state];
 }
 
+
+function setStateTaxes(state, baseTax, taxesByItemTypes) {
+    baseTaxes[state] = baseTax;
+
+    for (let type in itemTypes) {
+        itemTypes[type][state] = type in taxesByItemTypes ? taxesByItemTypes[type] : 0;
+    }
+}
+
+
 function calc(state, itemType) {
     var itemTypeTaxModifier = itemTypes[itemType];
     if (itemTypeTaxModifier[state] === "") {
@@ -90,11 +100,41 @@ calculateTaxes();
 //############################
 //Тесты:
 var tests = [
+    () => {
+        // prepare
+        let orig_itemTypes = {};
+        for (let k in itemTypes) {
+            orig_itemTypes[k] = Object.assign({}, itemTypes[k]);
+        }
+
+        let orig_baseTaxes = Object.assign({}, baseTaxes);
+
+        // arrange
+
+        // act
+        setStateTaxes(
+            'SomeNewState',
+            0.055,
+            {
+                "Groceries": 0,
+                "PrescriptionDrug": 0.011
+            }
+        );
+
+        // assert
+        let assertResult = assertEquals(0.011, itemTypes["PrescriptionDrug"]["SomeNewState"]);
+
+        // clearing
+        itemTypes = orig_itemTypes;
+        baseTaxes = orig_baseTaxes;
+
+        return assertResult;
+    },
     () => assertEquals(3.0 * (1 + 0.04), calculatePriceFor("Alabama", "eggs")),
     () => assertEquals(0.4 * (1 + 0.015 + 0.065), calculatePriceFor("Arkansas", "coca-cola")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("Alaska", "amoxicillin")),
     () => assertEquals(6.7 * (1 + 0.0), calculatePriceFor("California", "amoxicillin")),
-    () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger")),
+    () => assertEquals(2 * (1 + 0.0635), calculatePriceFor("Connecticut", "hamburger"))
 ];
 
 //Раскомментируйте следующую строчку для запуска тестов:
