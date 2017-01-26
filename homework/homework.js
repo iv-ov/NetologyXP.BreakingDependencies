@@ -45,7 +45,7 @@ var baseTaxes = {
 
 
 // We were asked to add some states.
-// We'll use the helping function to do it easier.
+// We'll use the helper function to do it easier.
 setStateTaxes("Tennessee", 0.07, {"Groceries": 0.05, "PreparedFood": 0, "PrescriptionDrug": 0});
 setStateTaxes("Texas", 0.0625, {"Groceries": "", "PreparedFood": 0, "PrescriptionDrug": ""});
 
@@ -55,9 +55,9 @@ function getBaseTax(state) {
 }
 
 
+// TODO: Consider changing taxes data structure so that states could be easyly added and edited without any helper function ("setStateTaxes()")
 function setStateTaxes(state, baseTax, taxesByItemTypes) {
     baseTaxes[state] = baseTax;
-
     for (let type in itemTypes) {
         itemTypes[type][state] = type in taxesByItemTypes ? taxesByItemTypes[type] : 0;
     }
