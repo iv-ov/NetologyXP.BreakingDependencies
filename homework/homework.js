@@ -44,7 +44,7 @@ var baseTaxes = {
 };
 
 function getBaseTax(state) {
-    return taxes[state];
+    return baseTaxes[state];
 }
 
 function calc(state, itemType) {
