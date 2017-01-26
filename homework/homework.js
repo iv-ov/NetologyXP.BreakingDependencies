@@ -9,30 +9,29 @@ var items = {
     "aspirin": {price: 0.2, type: "PrescriptionDrug"},
     "marijuana": {price: 1.4, type: "PrescriptionDrug"},
     "hamburger": {price: 2, type: "PreparedFood"},
-    "ceasar salad": {price: 4.2, type: "PreparedFood"},
+    "ceasar salad": {price: 4.2, type: "PreparedFood"}
 };
 
-var itemTypes =
-    {
-        "Groceries": {
-            "Alabama": 0,
-            "Alaska": 0,
-            "Arizona": "",
-            "Arkansas": 0.015,
-            "California": "",
-            "Colorado": "",
-            "Connecticut": ""
-        },
-        "PrescriptionDrug": {
-            "Alabama": "",
-            "Alaska": 0,
-            "Arizona": "",
-            "Arkansas": "",
-            "California": "",
-            "Colorado": "",
-            "Connecticut": ""
-        }
-    };
+var itemTypes = {
+    "Groceries": {
+        "Alabama": 0,
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": 0.015,
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    },
+    "PrescriptionDrug": {
+        "Alabama": "",
+        "Alaska": 0,
+        "Arizona": "",
+        "Arkansas": "",
+        "California": "",
+        "Colorado": "",
+        "Connecticut": ""
+    }
+};
 
 function base(state) {
     var taxes = {
@@ -48,7 +47,6 @@ function base(state) {
 }
 
 function calc(state, itemType) {
-
     var itemTypeTaxModifier = itemTypes[itemType];
     if (itemTypeTaxModifier[state] === "") {
         return 0;
@@ -60,9 +58,8 @@ function calc(state, itemType) {
 function calculatePriceFor(state, item) {
     var result = null;
     if (items[item].type === "PreparedFood") {
-        result = ( 1 + base(state) ) * items[item].price;
-    }
-    else {
+        result = (1 + base(state)) * items[item].price;
+    } else {
         result = calc(state, items[item].type) * items[item].price + items[item].price;
     }
     return result;
@@ -100,7 +97,7 @@ var tests = [
 ];
 
 //Раскомментируйте следующую строчку для запуска тестов:
-runAllTests (tests);
+runAllTests(tests);
 
 //############################
 //Код ниже этой строчки не надо менять для выполнения домашней работы
@@ -151,8 +148,7 @@ function runAllTests(tests) {
 
     if (failedTests === 0) {
         console.log(`Success: ${tests.length} tests passed.`);
-    }
-    else {
+    } else {
         console.error(`Fail: ${failedTests} tests failed.`);
     }
 }
